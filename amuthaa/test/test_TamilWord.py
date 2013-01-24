@@ -9,7 +9,7 @@ from amuthaa.TamilLetter import TamilLetter
 from amuthaa.TamilWord import TamilWord
 
 
-class CholTest(unittest.TestCase):
+class TamilWordTest(unittest.TestCase):
     """ A test class for the TamilWord module """
 
     def setUp(self):
@@ -28,7 +28,7 @@ class CholTest(unittest.TestCase):
 
 def suite():
     suite = unittest.TestSuite()
-    suite.addTest(unittest.makeSuite(CholTest))
+    suite.addTest(unittest.makeSuite(TamilWordTest))
     return suite
 
 
