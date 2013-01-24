@@ -22,12 +22,12 @@ class TamilWord(object):
         # if word is entered, call the word property's setter
         # (which generates the syllables and letters lists)
         if word:
-            self.word = word
+            self.word(word)
 
     def __getitem__(self, index):
         """ Read the letter at the given position in the letters list """
 
-        self.letters[index]
+        self._letters[index]
 
     def __setitem__(self, index, value):
         """ Modify a member at the given position in the letters list """
@@ -54,30 +54,31 @@ class TamilWord(object):
         """ Overload the + operator by appending the word string in the other
         object to the end of the self object """
 
-        other_word = u''
+        new_word = TamilWord(self.word)
+        new_word += other
 
-        if isinstance(other, TamilWord):
-            other_word = other.word
-
-        elif isinstance(str(other), string) or isinstance(other, unicode):
-            other_word = other
-
-        else:
-            raise TypeError("Object must be a TamilWord, String, or unicode \
-                object. Object is of type %s" % type(other))
-
-        self.word += other_word
+        return new_word
 
     def __iadd__(self, other):
         """ Overload the += operator """
 
         other_word = u''
 
+        # If other is TamilWord object, get its constituent word
         if isinstance(other, TamilWord):
             other_word = other.word
 
-        elif isinstance(str(other), string) or isinstance(other, unicode):
+        # If it's a unicode object, copy it directly
+        elif isinstance(other, unicode):
             other_word = other
+
+        # If it's a string, convert it to unicode
+        elif isinstance(other, string):
+            other_word = other.decode("utf8")
+
+        # If none of the above, it's an invalid character
+        else:
+            raise TypeError("Object must be TamilWord or unicode type")
 
         self.word += other_word
 
@@ -262,6 +263,8 @@ class TamilWord(object):
                 raise Exception("""Unknown error: \'%s\' in word %s is neither
                  a vowel, consonant, combination or aytham"""
                  % (letter, ''.join(letters)))
+
+        return syllables
 
 
         # TODO: Write extensive test cases for this
