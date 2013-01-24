@@ -12,20 +12,20 @@ WORDS = (
          {
           'text': u"மரம்",
           'len': 3,
-          'letters': (u'ம', u'ர', u'ம்'),
-          'syllables': (u'ம', u'ரம்')
+          'letters': [u'ம', u'ர', u'ம்'],
+          'syllables': [u'ம', u'ரம்']
           },
          {
           'text': u"மாமரம்",
           'len': 4,
-          'letters': (u'மா', u'ம', u'ரம்'),
-          'syllables': (u'மா', u'ம', u'ரம்')
+          'letters': [u'மா', u'ம', u'ர', u'ம்'],
+          'syllables': [u'மா', u'ம', u'ரம்']
           },
          {
           'text': u"ஈ",
           'len': 1,
-          'letters': (u'ஈ'),
-          'syllables': (u'ஈ')
+          'letters': [u'ஈ'],
+          'syllables': [u'ஈ']
           },
          {
           'text': u"கை",
@@ -36,20 +36,20 @@ WORDS = (
          {
           'text': u"",
           'len': 1,
-          'letters': (u'வ்'),
-          'syllables': (u'வ்')
+          'letters': [u'வ்'],
+          'syllables': [u'வ்']
           },
          {
           'text': u"அரசியல்",
           'len': 5,
-          'letters': (u'அ', u'ர', u'சி', u'ய', u'ல்'),
-          'syllables': (u'அ', u'ர', u'சி', u'யல்')
+          'letters': [u'அ', u'ர', u'சி', u'ய', u'ல்'],
+          'syllables': [u'அ', u'ர', u'சி', u'யல்']
           },
          {
           'text': u"பேனை",
           'len': 2,
-          'letters': (u'பே', u'னை'),
-          'syllables': (u'பே', u'னை')
+          'letters': [u'பே', u'னை'],
+          'syllables': [u'பே', u'னை']
           }
          )
 
@@ -65,10 +65,45 @@ class TamilWordTest(unittest.TestCase):
         #TODO: Add tear-down
         pass
 
-    def testSomething(self):
-        """docstring"""
+    def test_split_letters(self):
+        """ Tests the static split_letters() function
 
-        #TODO: implement this
+        Compare each of the dictionaries in the WORDS tuple to ensure that
+        the split_letters() function, when applied to the 'text' value,
+        produces the 'letters' value (which is also a tuple)
+        """
+
+        print """Testing TamilWord.split_letters()""",
+
+        for word in WORDS:
+
+            expected = word['letters']
+            received = TamilWord.split_letters(word['text'])
+
+            self.assertEquals(expected, received, """Expected tuple \'%s\',
+                but received tuple \'%s\'""" % (expected, received))
+
+        print ".... pass"
+
+    def test_split_syllables(self):
+        """ Tests the static split_syllables() function
+
+        Compare each of the dictionaries in the WORDS tuple to ensure that
+        the split_syllables() function, when applied to the 'text' value,
+        produces the 'syllables' value (which is also a tuple)
+        """
+
+        print """Testing TamilWord.split_syllables()""",
+
+        for word in WORDS:
+
+            expected = word['syllables']
+            received = TamilWord.split_syllables(word['text'])
+
+            self.assertEquals(expected, received, """Expected tuple \'%s\',
+                but received tuple \'%s\'""" % (expected, received))
+
+        print ".... pass"
 
 
 def suite():
